@@ -129,7 +129,8 @@ footer {
             "profile experience"
             "skills experience"
             "education experience"
-            "contact contact";
+            "contact contact"
+            "badges badges";
         gap: 1rem 2rem;
         width: 80%;
         margin: 1rem auto;
@@ -153,6 +154,10 @@ footer {
 
     .contact-section {
         grid-area: contact;
+    }
+
+    .badges-section {
+        grid-area: badges;
     }
 }
 
@@ -442,4 +447,35 @@ footer {
 .experience-item.visible {
     display: block;
     opacity: 1;
+}
+
+.badges-section {
+    text-align: center;
+    margin-top: 2em;
+}
+
+.badge-item {
+    margin-bottom: 1.5em;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+}
+
+.badge-image {
+    max-width: 150px;
+    height: auto;
+    display: block;
+    margin: 0 auto 0.5em;
+}
+
+.badge-description {
+    font-size: 1em;
+    color: #eee;
+    margin-bottom: 0.2em;
+    font-weight: bold;
+}
+
+.badge-date {
+    font-size: 0.8em;
+    color: #bbb;
 }
