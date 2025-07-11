@@ -160,9 +160,11 @@ footer {
         grid-area: education;
     }
 
+    /*
     .contact-section {
         grid-area: contact;
     }
+    */
 
     .badges-section {
         grid-area: badges;
