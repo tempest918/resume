@@ -537,8 +537,8 @@ footer {
 }
 
 .badge-image {
-    width: 100px;
-    height: 100px;
+    width: 115px;
+    height: 115px;
     min-width: 60px;
     flex-shrink: 0;
     margin-right: 15px;
