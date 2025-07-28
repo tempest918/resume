@@ -90,7 +90,7 @@ body {
     border-top: 1px solid white;
     padding-top: 0.5em;
     display: inline-block;
-    width: auto; 
+    width: auto;
 }
 
 .header .contact-info {
@@ -137,7 +137,6 @@ footer {
             "profile experience"
             "skills experience"
             "education experience"
-            "contact contact"
             "badges badges";
         gap: 1rem 2rem;
         width: 80%;
@@ -160,23 +159,55 @@ footer {
         grid-area: education;
     }
 
-    /*
-    .contact-section {
-        grid-area: contact;
-    }
-    */
-
     .badges-section {
         grid-area: badges;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .badges-section .section-title {
+        flex-basis: 100%;
+        margin-bottom: 1em;
+    }
+
+    .badge-item {
+        margin: 1em;
     }
 }
 
 /* Ultrawide View */
 @media (min-width: 1920px) {
     .container {
-        width: 70%;
+        width: 90%;
         max-width: 1600px;
         margin: 0.5rem auto;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "profile experience"
+            "skills experience"
+            "education experience"
+            "badges badges";
+        gap: 1rem 2.5rem;
+    }
+    .profile-section { grid-area: profile; }
+    .experience-section { grid-area: experience; }
+    .skills-section { grid-area: skills; }
+    .education-section { grid-area: education; }
+    .badges-section {
+        grid-area: badges;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .badges-section .section-title { 
+        flex-basis: 100%;
+        margin-bottom: 1em;
     }
 }
 
@@ -462,30 +493,86 @@ footer {
 .badges-section {
     text-align: center;
     margin-top: 2em;
-}
-
-.badge-item {
-    margin-bottom: 1.5em;
-    display: inline-block;
-    vertical-align: top;
     padding: 10px;
 }
 
+.badge-item {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.1);
+    margin: 1em auto;
+    display: flex;
+    vertical-align: top;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+    width: 450px;
+    max-width: 95%;
+    height: 120px;
+}
+
+@media (min-width: 768px) {
+    .badges-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .badge-item {
+        margin: 1em;
+    }
+}
+
+.badge-item a {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    height: 100%;
+}
+
 .badge-image {
-    max-width: 150px;
-    height: auto;
-    display: block;
-    margin: 0 auto 0.5em;
+    width: 100px;
+    height: 100px;
+    min-width: 60px;
+    flex-shrink: 0;
+    margin-right: 15px;
+    object-fit: contain;
 }
 
-.badge-description {
-    font-size: 1em;
-    color: #eee;
-    margin-bottom: 0.2em;
-    font-weight: bold;
+.badge-text-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    text-align: left;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
-.badge-date {
-    font-size: 0.8em;
-    color: #bbb;
+.badge-title {
+    margin: 0;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333333;
+    line-height: 1.2;
+}
+
+.badge-meta {
+    margin: 0;
+    font-size: 0.9em;
+    color: #555555;
+    line-height: 1.4;
+}
+
+.badge-item:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.15);
+    border: 1px solid #28a745;
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
 }
