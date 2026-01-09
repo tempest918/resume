@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Oswald:wght@400;700&family=PT+Sans:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "PT Sans", "Noto Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-oswald: "Oswald", sans-serif;
+}
