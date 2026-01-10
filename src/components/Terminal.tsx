@@ -10,9 +10,11 @@ interface Command {
 interface TerminalProps {
     isOpen: boolean;
     onClose: () => void;
+    onToggleMatrix: () => void;
+    isMatrixActive: boolean;
 }
 
-const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
+const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose, onToggleMatrix, isMatrixActive }) => {
     const [history, setHistory] = useState<Command[]>([
         { input: '', output: 'Welcome to AnthonyOS v1.0.0. Type "help" for available commands.' }
     ]);
@@ -41,6 +43,7 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
                             <span className="text-yellow-400">ls</span><span>List resume sections</span>
                             <span className="text-yellow-400">cat [file]</span><span>Read a section (e.g., "cat skills")</span>
                             <span className="text-yellow-400">clear</span><span>Clear terminal history</span>
+                            <span className="text-yellow-400">matrix</span><span>Toggle the Matrix</span>
                             <span className="text-yellow-400">exit</span><span>Close terminal</span>
                         </div>
                     </div>
@@ -70,6 +73,15 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
             case 'clear':
                 setHistory([]);
                 return;
+            case 'matrix':
+                onToggleMatrix();
+                if (isMatrixActive) {
+                    output = <span className="text-blue-400 font-bold">The illusion dissolves... Welcome back to the real world.</span>;
+                } else {
+                    output = <span className="text-green-500 font-bold">Wake up, Neo... The Matrix has you.</span>;
+                }
+                setTimeout(() => onClose(), 2000); // Give them a moment to read it
+                break;
             case 'exit':
                 onClose();
                 return;
@@ -125,7 +137,7 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
             const trimmedInput = input.trim();
             if (!trimmedInput) return;
 
-            const commands = ['help', 'whoami', 'ls', 'cat', 'clear', 'exit'];
+            const commands = ['help', 'whoami', 'ls', 'cat', 'clear', 'exit', 'matrix'];
             const files = ['profile.txt', 'experience.log', 'skills.json', 'education.db', 'projects.git', 'certs.pem'];
 
             let possibleMatches: string[] = [];

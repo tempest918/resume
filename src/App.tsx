@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
 import { resumeData } from './data';
 import Terminal from './components/Terminal';
+import MatrixRain from './components/MatrixRain';
 import { Linkedin, Github, ChevronDown, ChevronUp, Terminal as TerminalIcon, Printer } from 'lucide-react';
 
 const App: React.FC = () => {
   const [showArchive, setShowArchive] = useState<boolean>(false);
   const [showTerminal, setShowTerminal] = useState<boolean>(false);
+  const [showMatrix, setShowMatrix] = useState<boolean>(false);
 
   return (
-    <div className="min-h-screen text-slate-200 font-sans selection:bg-blue-500 selection:text-white pb-20">
+    <div className="min-h-screen text-slate-200 font-sans selection:bg-blue-500 selection:text-white pb-20 relative overflow-hidden">
+      {/* Secret Matrix Rain*/}
+      {showMatrix && <MatrixRain />}
+
       {/* Setting the stage: neat background layers for depth */}
       <div className="fixed inset-0 -z-20 bg-slate-950" />
-      <div className="fixed inset-0 -z-10 bg-[url('/assets/background.jpg')] bg-cover bg-center opacity-20" />
+      <div className={`fixed inset-0 -z-10 bg-[url('/assets/background.jpg')] bg-cover bg-center transition-opacity duration-700 ${showMatrix ? 'opacity-5' : 'opacity-20'}`} />
 
-      {/* The secret terminal overlay - shh! */}
-      <Terminal isOpen={showTerminal} onClose={() => setShowTerminal(false)} />
+      {/* The terminal overlay*/}
+      <Terminal
+        isOpen={showTerminal}
+        onClose={() => setShowTerminal(false)}
+        onToggleMatrix={() => setShowMatrix(!showMatrix)}
+        isMatrixActive={showMatrix}
+      />
 
       {/* Quick access button for the terminal easter egg */}
       <button
