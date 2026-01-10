@@ -1,8 +1,11 @@
+// This file is the single source of truth for all resume content.
+// Edit this file to update your bio, experience, skills, and projects - no HTML touching required!
+
 import type { ResumeData } from './types';
 
 export const resumeData: ResumeData = {
-    name: "ANTHONY LANE BARNES",
-    title: "DevOps Engineer with Telecommunications and IT Experience",
+    name: "Anthony Lane Barnes",
+    title: "DevSecOps Engineer & Cloud Architect",
     contact: {
         location: "Bloomington, IN",
         email: "tonylbarnes@gmail.com",
@@ -10,7 +13,7 @@ export const resumeData: ResumeData = {
         github: "github.com/tempest918",
         gravatarHash: "7cdff63debe0dfcc3fca1b5a283aa4b64c641682e6911ea925e24158959fad34"
     },
-    profile: "A highly motivated and detail-oriented DevOps Engineer with a strong background in telecommunications and IT. Offers a diverse skill set honed through roles in systems administration, cloud infrastructure (AWS, Azure DevOps), scripting and automation, and database management. Adept at problem-solving, process improvement, and delivering effective technical solutions.",
+    profile: "Results-driven DevOps Engineer with a Master's in Software Engineering. Specialized in designing secure, scalable cloud-native architectures and automating complex CI/CD pipelines. Expert in container orchestration, AWS infrastructure, and refactoring monolithic systems into decoupled microservices. Combines deep technical expertise in SAST/DAST security practices with a strategic approach to software delivery and reliability.",
     experience: [
         {
             title: "DevOps Engineer",
@@ -177,67 +180,45 @@ export const resumeData: ResumeData = {
         }
     ],
     skills: {
-        "DevOps": [
-            "Azure DevOps",
-            "Continuous Deployment Pipelines",
-            "Automation",
-            "Container Orchestration (Kubernetes, Docker)",
-            "Infrastructure as Code (CloudFormation)",
-            "CI/CD"
+        "Cloud & DevOps": [
+            "AWS (EKS, Beanstalk, CloudFormation)",
+            "Azure DevOps & Cloud Management",
+            "Kubernetes & Docker Containerization",
+            "GitLab CI/CD Pipelines",
+            "Infrastructure as Code",
+            "Artifact Management (ECR/GitLab Registry)"
         ],
-        "Cloud Computing": [
-            "Azure Cloud Management",
-            "AWS Cloud Services",
-            "AWS Deployments & Administration"
+        "DevSecOps & Security": [
+            "SAST/DAST Vulnerability Analysis",
+            "WAF & ACL Implementation",
+            "IAM & Least Privilege Security",
+            "SIEM Administration (Splunk/Graylog)",
+            "Firewall Rules & Network Security",
+            "Secure Software Supply Chain"
         ],
-        "Scripting & Programming": [
-            "PowerShell",
-            "Bash",
-            "C#",
-            "Visual Studio (Debugging)"
-        ],
-        "Databases": [
-            "Microsoft SQL Server",
-            "MySQL",
-            "Oracle",
-            "PostgreSQL",
-            "Database Schemas",
-            "Database Administration",
-            "Database Tuning & Optimization"
-        ],
-        "Systems Administration": [
-            "Windows Server Administration",
-            "Linux Server Administration",
-            "Mac Installation & Troubleshooting",
-            "Active Directory",
-            "DNS",
-            "DHCP",
-            "Group Policy",
-            "Server Upgrades & Rollouts",
-            "Backup & Recovery Solutions",
-            "System Monitoring",
-            "Firewall Deployments & Rule Updates",
-            "SIEM Administration (Splunk, Graylog)",
-            "Logging Management"
-        ],
-        "Networking": [
-            "Coaxial Network Telecommunications",
-            "IP Network Telecommunications"
-        ],
-        "Other": [
-            "Web Application Monitoring (IIS/Linux)",
-            "PowerBI Dashboards & Datasets",
-            "API Integrations (Postman)",
+        "Development & Automation": [
+            "Python, C#, Node.js, PHP",
+            "Microservices Architecture",
             "Web Automation (Selenium)",
-            "System Analytics & Monitoring (Grafana, InfluxDB, Telegraf)",
-            "Project Management",
-            "Customer Service",
-            "Technical & Billing Problem Solving",
-            "Team Leadership",
-            "Digital Media (Branding, Advertising, Website Design)"
+            "Scripting (PowerShell/Bash)",
+            "API Development & Integration (Postman)",
+            "Visual Studio & Debugging"
+        ],
+        "Data & Observability": [
+            "Prometheus & Grafana Monitoring",
+            "Microsoft SQL Server & SSRS",
+            "Database Administration (Oracle/Postgres)",
+            "PowerBI Dashboards & Analytics",
+            "Log Aggregation (Loki/CloudWatch)",
+            "KPI Definition & Alerting"
         ]
     },
     education: [
+        {
+            title: "Master of Science, Software Engineering - DevOps Engineering",
+            institution: "Western Governor's University",
+            date: "Anticipated 2026"
+        },
         {
             title: "Bachelor of Science in Software Engineering",
             institution: "Western Governor's University",
@@ -290,6 +271,38 @@ export const resumeData: ResumeData = {
             date: "July 26, 2025",
             img: "comptia-project+-certificate.png",
             link: "https://www.certmetrics.com/comptia/public/verification.aspx?code=7FKS35D501F12B8J"
+        }
+    ],
+    projects: [
+        {
+            title: "DevOps Security: Vulnerability Management",
+            description: "Conducted security analysis using SAST/DAST tools. Identified and remediated critical vulnerabilities including SQL and Command Injection. Implemented WAF and ACLs for defense.",
+            technologies: ["GitLab SAST/DAST", "Node.js", "Express", "WAF", "ACLs"]
+        },
+        {
+            title: "Container Orchestration & CI/CD",
+            description: "Designed a comprehensive CI/CD pipeline automating build, test, and deployment to AWS EKS. Implemented multi-stage Docker builds and Kubernetes HPA/Ingress.",
+            technologies: ["Kubernetes", "Docker", "AWS EKS", "GitLab CI/CD", "Helm"]
+        },
+        {
+            title: "Kubernetes Performance Monitoring",
+            description: "Implemented Prometheus and Grafana for cluster monitoring. Defined 99.9% uptime KPIs, configured alerts, and optimized resource efficiency with scaling strategies.",
+            technologies: ["Prometheus", "Grafana", "Kubernetes", "Alerting", "HPA"]
+        },
+        {
+            title: "Secure Cloud Architecture",
+            description: "Architected a secure AWS environment using Elastic Beanstalk and CloudFront. Implemented Least Privilege IAM roles, strict Security Groups, and HTTPS encryption.",
+            technologies: ["AWS Elastic Beanstalk", "CloudFront", "IAM", "CloudFormation", "PHP"]
+        },
+        {
+            title: "Artifact Management System",
+            description: "Established a centralized artifact strategy using Amazon ECR and GitLab Package Registry. Standardized versioning and automated container validation.",
+            technologies: ["Amazon ECR", "GitLab Package Registry", "Docker", "CI/CD"]
+        },
+        {
+            title: "Software Architecture & Design Patterns",
+            description: "Analyzed complex business requirements to design scalable cloud-native architectures. Refactored a legacy monolithic Python system into a decoupled microservices ecosystem with orchestration.",
+            technologies: ["Python", "Microservices", "Design Patterns", "Cloud Architecture", "Refactoring"]
         }
     ]
 };

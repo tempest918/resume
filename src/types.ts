@@ -21,6 +21,13 @@ export interface Certification {
     link: string;
 }
 
+export interface Project {
+    title: string;
+    description: string;
+    technologies: string[];
+    linkUrl?: string;
+}
+
 export interface ResumeData {
     name: string;
     title: string;
@@ -36,4 +43,5 @@ export interface ResumeData {
     skills: Record<string, string[]>;
     education: Education[];
     certifications: Certification[];
+    projects: Project[];
 }

@@ -1,15 +1,40 @@
 import React, { useState } from 'react';
 import { resumeData } from './data';
-import { Linkedin, Github, ChevronDown, ChevronUp } from 'lucide-react';
+import Terminal from './components/Terminal';
+import { Linkedin, Github, ChevronDown, ChevronUp, Terminal as TerminalIcon } from 'lucide-react';
 
 const App: React.FC = () => {
   const [showArchive, setShowArchive] = useState<boolean>(false);
+  const [showTerminal, setShowTerminal] = useState<boolean>(false);
 
   return (
-    <div className="min-h-screen text-slate-200 font-sans selection:bg-blue-500 selection:text-white">
-      {/* Fixed Background Layers */}
+    <div className="min-h-screen text-slate-200 font-sans selection:bg-blue-500 selection:text-white pb-20">
+      {/* Setting the stage: neat background layers for depth */}
       <div className="fixed inset-0 -z-20 bg-slate-950" />
       <div className="fixed inset-0 -z-10 bg-[url('/assets/background.jpg')] bg-cover bg-center opacity-20" />
+
+      {/* The secret terminal overlay - shh! */}
+      <Terminal isOpen={showTerminal} onClose={() => setShowTerminal(false)} />
+
+      {/* Quick access button for the terminal easter egg */}
+      <button
+        onClick={() => setShowTerminal(true)}
+        className="fixed bottom-6 right-6 z-40 bg-slate-900 border border-slate-700 text-cyan-400 p-4 rounded-full shadow-2xl hover:scale-110 hover:border-cyan-500 transition-all duration-300 group print:hidden"
+        title="Open Terminal"
+      >
+        <TerminalIcon size={24} className="group-hover:animate-pulse" />
+      </button>
+
+      {/* TODO: Re-enable PDF download once the new design is finalized
+      <a
+        href="/resume.pdf"
+        download="Anthony_Barnes_Resume.pdf"
+        className="fixed top-6 right-6 z-40 bg-slate-900/80 backdrop-blur-sm border border-slate-700 text-slate-300 p-3 rounded-full shadow-xl hover:scale-110 hover:border-cyan-500 hover:text-cyan-400 transition-all duration-300 group"
+        title="Download PDF"
+      >
+        <Printer size={20} />
+      </a>
+      */}
 
       <header className="pt-24 pb-12 text-center px-4 animate-fade-in-up">
         <img
@@ -28,13 +53,13 @@ const App: React.FC = () => {
 
       <main className="w-[95%] max-w-[1600px] mx-auto px-8 py-12 grid grid-cols-1 lg:grid-cols-3 gap-12 bg-black/40 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl my-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
 
-        {/* 1. Profile - Full Width Top */}
+        {/* 1. Profile: Front and center to make a strong first impression */}
         <section className="lg:col-span-3 text-center max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold border-b-2 border-slate-700 pb-2 mb-6 uppercase font-oswald inline-block text-gradient">Profile</h2>
           <p className="text-slate-300 leading-relaxed text-lg">{resumeData.profile}</p>
         </section>
 
-        {/* 2. Experience - Mobile: 2nd, Desktop: Right Column (Row 2) */}
+        {/* 2. Experience: Stacked strictly for mobile, side-by-side on desktop */}
         <section className="lg:col-span-2 lg:col-start-2 lg:row-start-2">
           <h2 className="text-3xl font-bold border-b-2 border-slate-700 pb-2 mb-8 uppercase font-oswald text-center lg:text-left text-gradient">Experience</h2>
           <div className="space-y-8">
@@ -59,7 +84,7 @@ const App: React.FC = () => {
           </button>
         </section>
 
-        {/* 3. Skills - Mobile: 3rd, Desktop: Left Column (Row 2) */}
+        {/* 3. Skills: Grouped by category for easier scanning */}
         <section className="lg:col-span-1 lg:col-start-1 lg:row-start-2">
           <h2 className="text-3xl font-bold border-b-2 border-slate-700 pb-2 mb-6 uppercase font-oswald text-center lg:text-left text-gradient">Skills</h2>
           {Object.entries(resumeData.skills).map(([cat, list]) => (
@@ -74,8 +99,42 @@ const App: React.FC = () => {
           ))}
         </section>
 
-        {/* 4. Education - Mobile: 4th, Desktop: Right Column (Row 3) */}
-        <section className="lg:col-span-2 lg:col-start-2 lg:row-start-3">
+        {/* 4. Projects: Grid layout giving each project enough breathing room */}
+        <section className="lg:col-span-3 lg:row-start-3">
+          <h2 className="text-3xl font-bold border-b-2 border-slate-700 pb-2 mb-8 uppercase font-oswald text-center text-gradient">Projects</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {resumeData.projects.map((proj, i) => {
+              const Container = proj.linkUrl ? 'a' : 'div';
+              const props = proj.linkUrl ? {
+                href: proj.linkUrl,
+                target: "_blank",
+                rel: "noopener noreferrer"
+              } : {};
+
+              return (
+                <Container
+                  key={i}
+                  {...props}
+                  className={`group p-6 bg-slate-900/40 backdrop-blur-md rounded-xl border border-white/5 hover:border-cyan-500/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-cyan-500/10 flex flex-col h-full ${proj.linkUrl ? 'cursor-pointer' : 'cursor-default'}`}
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors uppercase font-oswald">{proj.title}</h3>
+                    {proj.linkUrl && <Github size={20} className="text-slate-500 group-hover:text-white transition-colors" />}
+                  </div>
+                  <p className="text-slate-400 text-sm mb-6 flex-grow">{proj.description}</p>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {proj.technologies.map(tech => (
+                      <span key={tech} className="text-xs font-bold text-blue-400 bg-blue-900/20 px-2 py-1 rounded">{tech}</span>
+                    ))}
+                  </div>
+                </Container>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* 5. Education: Keeping this compact but visible */}
+        <section className="lg:col-span-2 lg:col-start-2 lg:row-start-4">
           <h2 className="text-3xl font-bold border-b-2 border-slate-700 pb-2 mb-8 uppercase font-oswald text-center lg:text-left text-gradient">Education</h2>
           <div className="space-y-6">
             {resumeData.education.map((edu, i) => (
@@ -90,8 +149,8 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        {/* 5. Badges - Mobile: 5th, Desktop: Left Column (Row 3) */}
-        <section className="lg:col-span-1 lg:col-start-1 lg:row-start-3">
+        {/* 6. Badges: Showing off the certifications */}
+        <section className="lg:col-span-1 lg:col-start-1 lg:row-start-4">
           <h2 className="text-3xl font-bold border-b-2 border-slate-700 pb-2 mb-8 uppercase font-oswald text-center lg:text-left text-gradient">Badges</h2>
           <div className="grid grid-cols-2 gap-4">
             {resumeData.certifications.map((cert, i) => (
@@ -114,7 +173,7 @@ const App: React.FC = () => {
 
       </main>
 
-      {/* Separate Contact Section */}
+      {/* Dedicated contact area to drive engagement */}
       <section className="w-[95%] max-w-2xl mx-auto px-8 py-12 bg-black/40 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl mb-12 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
         <h2 className="text-3xl font-bold border-b-2 border-slate-700 pb-2 mb-8 uppercase font-oswald text-center text-gradient">Contact Me</h2>
         <form
@@ -122,7 +181,7 @@ const App: React.FC = () => {
           method="POST"
           className="space-y-4"
         >
-          {/* Hidden Config Fields */}
+          {/* Magic fields for FormSubmit configuration */}
           <input type="hidden" name="_subject" value="New submission from Resume Site" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_next" value={window.location.href} />
