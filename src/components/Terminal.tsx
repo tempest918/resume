@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Minus, Square, Terminal as TerminalIcon } from 'lucide-react';
 import { resumeData } from '../data';
+import SystemMonitor from './SystemMonitor';
 
 interface Command {
     input: string;
@@ -19,6 +20,7 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose, onToggleMatrix, is
         { input: '', output: 'Welcome to AnthonyOS v1.0.0. Type "help" for available commands.' }
     ]);
     const [input, setInput] = useState('');
+    const [viewMode, setViewMode] = useState<'cli' | 'monitor'>('cli');
     const bottomRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -44,6 +46,7 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose, onToggleMatrix, is
                             <span className="text-yellow-400">cat [file]</span><span>Read a section (e.g., "cat skills")</span>
                             <span className="text-yellow-400">clear</span><span>Clear terminal history</span>
                             <span className="text-yellow-400">matrix</span><span>Toggle the Matrix</span>
+                            <span className="text-yellow-400">htop</span><span>Monitor system resources</span>
                             <span className="text-yellow-400">exit</span><span>Close terminal</span>
                         </div>
                     </div>
@@ -82,6 +85,9 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose, onToggleMatrix, is
                 }
                 setTimeout(() => onClose(), 2000); // Give them a moment to read it
                 break;
+            case 'htop':
+                setViewMode('monitor');
+                return;
             case 'exit':
                 onClose();
                 return;
@@ -137,7 +143,7 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose, onToggleMatrix, is
             const trimmedInput = input.trim();
             if (!trimmedInput) return;
 
-            const commands = ['help', 'whoami', 'ls', 'cat', 'clear', 'exit', 'matrix'];
+            const commands = ['help', 'whoami', 'ls', 'cat', 'clear', 'exit', 'matrix', 'htop'];
             const files = ['profile.txt', 'experience.log', 'skills.json', 'education.db', 'projects.git', 'certs.pem'];
 
             let possibleMatches: string[] = [];
@@ -206,38 +212,46 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose, onToggleMatrix, is
                     </div>
                 </div>
 
-                {/* Terminal Content */}
-                <div className="flex-1 p-4 overflow-y-auto space-y-2 text-slate-200" onClick={() => inputRef.current?.focus()}>
-                    {history.map((entry, i) => (
-                        <div key={i} className="space-y-1">
-                            {entry.input && (
-                                <div className="flex gap-2">
-                                    <span className="text-green-400 font-bold">➜</span>
-                                    <span className="text-cyan-400">~</span>
-                                    <span>{entry.input}</span>
-                                </div>
-                            )}
-                            <div className="pl-4 whitespace-pre-wrap">{entry.output}</div>
-                        </div>
-                    ))}
+                {/* Terminal Content or Monitor */}
+                {viewMode === 'monitor' ? (
+                    <div className="flex-1 relative" onClick={() => setViewMode('cli')}>
+                        <SystemMonitor />
+                        {/* Overlay to hint how to exit */}
+                        <div className="absolute bottom-1 right-2 text-xs text-slate-500 opacity-50">Click anywhere to return to shell</div>
+                    </div>
+                ) : (
+                    <div className="flex-1 p-4 overflow-y-auto space-y-2 text-slate-200" onClick={() => inputRef.current?.focus()}>
+                        {history.map((entry, i) => (
+                            <div key={i} className="space-y-1">
+                                {entry.input && (
+                                    <div className="flex gap-2">
+                                        <span className="text-green-400 font-bold">➜</span>
+                                        <span className="text-cyan-400">~</span>
+                                        <span>{entry.input}</span>
+                                    </div>
+                                )}
+                                <div className="pl-4 whitespace-pre-wrap">{entry.output}</div>
+                            </div>
+                        ))}
 
-                    <form onSubmit={handleSubmit} className="flex gap-2 items-center">
-                        <span className="text-green-400 font-bold">➜</span>
-                        <span className="text-cyan-400">~</span>
-                        <input
-                            ref={inputRef}
-                            type="text"
-                            value={input}
-                            onChange={handleInputChange}
-                            onKeyDown={handleKeyDown}
-                            className="bg-transparent border-none outline-none flex-1 text-slate-200 focus:ring-0 p-0"
-                            autoFocus
-                            spellCheck="false"
-                            autoComplete="off"
-                        />
-                    </form>
-                    <div ref={bottomRef} />
-                </div>
+                        <form onSubmit={handleSubmit} className="flex gap-2 items-center">
+                            <span className="text-green-400 font-bold">➜</span>
+                            <span className="text-cyan-400">~</span>
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                value={input}
+                                onChange={handleInputChange}
+                                onKeyDown={handleKeyDown}
+                                className="bg-transparent border-none outline-none flex-1 text-slate-200 focus:ring-0 p-0"
+                                autoFocus
+                                spellCheck="false"
+                                autoComplete="off"
+                            />
+                        </form>
+                        <div ref={bottomRef} />
+                    </div>
+                )}
             </div>
         </div>
     );
