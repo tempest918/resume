@@ -217,7 +217,7 @@ export const resumeData: ResumeData = {
         {
             title: "Master of Science, Software Engineering - DevOps Engineering",
             institution: "Western Governor's University",
-            date: "Anticipated 2026"
+            date: "January 13, 2026"
         },
         {
             title: "Bachelor of Science in Software Engineering",
